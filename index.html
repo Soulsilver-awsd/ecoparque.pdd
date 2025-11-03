@@ -1,12 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoParque Punta del Diablo</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Hito n°1 - Hibisco de Bañado</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>EcoParque Punta del Diablo</h1>
+  <header>
+    <div class="logo">LOGO</div>
+    <button class="menu-toggle">☰</button>
+  </header>
+
+  <nav class="menu">
+    <div class="menu-header">
+      <div class="logo">LOGO</div>
+      <button class="close-menu">✕</button>
+    </div>
+    <ul>
+      <li>Inicio</li>
+      <li>Sobre el proyecto</li>
+      <li>Listado de Hitos</li>
+      <li>Travesía PPD</li>
+    </ul>
+  </nav>
+
+  <section class="map-section">
+    <button class="map-toggle">
+      <span class="material-icons ubicacion-icon">location_on</span>
+      <span class="ubicacion-texto">Ubicación en el recorrido</span>
+      <span class="material-icons arrow">keyboard_arrow_down</span>
+    </button>
+
+    <div class="map-content">
+      <img src="" alt="Mapa del recorrido" class="placeholder map-img">
+    </div>
+  </section>
+
+  <main class="content">
+    <h2>Hito n° 1<br><span class="highlight">Hibisco de bañado</span></h2>
+    <img src="" alt="Ilustración Hibisco" class="placeholder plant-img" />
+
+    <p>
+      El hibisco de bañado es una <strong>planta herbácea</strong> que habita en <strong>zonas húmedas y márgenes de cursos de agua</strong>.
+      Sus flores grandes, generalmente de tonos rosados o rojos, son muy vistosas y de gran atractivo natural.
+      Es <strong>importante su especie</strong> por su valor ecológico y al atraer <strong>polinizadores</strong> como abejas, mariposas y aves.
+    </p>
+
+    <p>
+      Además de su atractivo visual, el hibisco cumple una función clave en los ecosistemas acuáticos,
+      ayudando a estabilizar los suelos y prevenir la erosión en las orillas. 
+      Su presencia indica buena calidad ambiental y su capacidad de adaptarse a suelos encharcados la convierte
+      en una especie emblemática de los humedales del litoral.
+    </p>
+  </main>
+
+  <section class="memories">
+    <h3>Memorias</h3>
+    <div class="memory-card">
+      <img src="" alt="Paisaje" class="placeholder memory-img" />
+      <blockquote>
+        “Cuando era pequeña mi mamá siempre usaba la planta X para cocinar en invierno”  
+        <span class="author">– Ana González</span>
+      </blockquote>
+    </div>
+  </section>
+
+  <footer>
+    <p>Este proyecto fue desarrollado en el marco de la Travesía PPD, octubre 2025.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
