@@ -1,98 +1,65 @@
+// Sección mapa desplegable
+const mapToggle = document.querySelector(".map-toggle");
+const mapContent = document.querySelector(".map-content");
+const arrow = document.querySelector(".arrow");
+
+mapToggle.addEventListener("click", () => {
+ if (mapContent.style.display === "block") {
+ mapContent.style.display = "none";
+ arrow.textContent = "keyboard_arrow_down";
+ } else {
+ mapContent.style.display = "block";
+ arrow.textContent = "keyboard_arrow_up";
+ }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+ const track = document.querySelector('.carousel-track');
+ const items = Array.from(track.children);
+ const dots = document.querySelectorAll('.dot');
 
-    // --- 2. FUNCIONALIDAD DEL MAPA DESPLEGABLE (Sin cambios) ---
+ let currentIndex = 0;
+ let startX = 0;
+ let isDragging = false;
+ let currentTranslate = 0; // posición acumulada
 
-    const mapToggle = document.querySelector(".map-toggle");
-    const mapContent = document.querySelector(".map-content");
-    const arrow = document.querySelector(".arrow");
+ function setSlide(index) {
+ // Limita el índice a los elementos disponibles
+ if (index < 0) index = 0;
+ if (index >= items.length) index = items.length - 1;
 
-    mapToggle.addEventListener("click", () => {
-        mapContent.classList.toggle("map-open");
-        if (mapContent.classList.contains("map-open")) {
-            arrow.textContent = "keyboard_arrow_up";
-            mapToggle.setAttribute("aria-expanded", "true");
-        } else {
-            arrow.textContent = "keyboard_arrow_down";
-            mapToggle.setAttribute("aria-expanded", "false");
-        }
-    });
+ currentIndex = index;
+ currentTranslate = -index * 100; // porcentaje acumulado
+ track.style.transform = `translateX(${currentTranslate}%)`;
+ dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+ }
 
-// Asegúrate de que este bloque de código está DENTRO de tu document.addEventListener('DOMContentLoaded', ...
-// para que todos los elementos existan.
+ track.addEventListener('touchstart', e => {
+ startX = e.touches[0].clientX;
+ isDragging = true;
+ });
 
-// --- 3. FUNCIONALIDAD DEL CARRUSEL (FINAL) ---
-    
-const track = document.querySelector('.carousel-track');
-const items = Array.from(track.children);
-const dots = document.querySelectorAll('.dot');
-const carouselContainer = document.querySelector('.carousel'); // Seleccionamos el contenedor principal
-    
-// Si no hay ítems o solo hay uno, salimos
-if (items.length <= 1) {
-    if (dots[0]) dots[0].classList.add('active'); 
-    return; 
-} 
+ track.addEventListener('touchmove', e => {
+ if (!isDragging) return;
+ const deltaX = e.touches[0].clientX - startX;
+ // actualiza posición mientras arrastras
+ track.style.transform = `translateX(${currentTranslate + (deltaX / track.offsetWidth) * 100}%)`;
+ });
 
-let currentIndex = 0; 
-let startX = 0;
-let isDragging = false;
-let currentTranslate = 0; 
+ track.addEventListener('touchend', e => {
+ isDragging = false;
+ const endX = e.changedTouches[0].clientX;
+ const deltaX = endX - startX;
 
-// CALCULO OPTIMIZADO: Usamos el ancho del contenedor principal, que es más seguro.
-// Si tu CSS es correcto (min-width: 100% en .carousel-item), el ancho del ítem debe ser igual a este.
-const itemWidth = carouselContainer.offsetWidth; 
+ if (deltaX < -50) setSlide(currentIndex + 1); // swipe a la izquierda
+ else if (deltaX > 50) setSlide(currentIndex - 1); // swipe a la derecha
+ else setSlide(currentIndex); // si no hay suficiente movimiento, vuelve al mismo
+ });
 
-function setSlide(index) {
-    
-    // Lógica circular
-    if (index < 0) index = items.length - 1; 
-    if (index >= items.length) index = 0; 
+ // Agregar función para tocar los dots
+ dots.forEach((dot, i) => {
+ dot.addEventListener('click', () => setSlide(i));
+ });
 
-    currentIndex = index;
-
-    // Calcula la posición en PIXELES (índice * ancho del contenedor)
-    currentTranslate = -currentIndex * itemWidth;
-
-    track.style.transform = `translateX(${currentTranslate}px)`;
-
-    // Actualiza los puntos
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
-}
-
-// Inicializa al cargar
-setSlide(0); 
-
-// --- Eventos Táctiles (Touch Events) ---
-
-track.addEventListener('touchstart', e => {
-    e.preventDefault(); 
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    track.style.transition = 'none'; 
-});
-
-track.addEventListener('touchmove', e => {
-    if (!isDragging) return;
-    e.preventDefault(); 
-    const deltaX = e.touches[0].clientX - startX;
-    track.style.transform = `translateX(${currentTranslate + deltaX}px)`;
-});
-
-track.addEventListener('touchend', e => {
-    isDragging = false;
-    track.style.transition = 'transform 0.5s ease-in-out'; 
-    
-    const endX = e.changedTouches[0].clientX;
-    const deltaX = endX - startX;
-
-    // Mantenemos el umbral de 50px
-    if (deltaX < -50) setSlide(currentIndex + 1); // Avanza
-    else if (deltaX > 50) setSlide(currentIndex - 1); // Retrocede
-    else setSlide(currentIndex); // Se queda
-});
-
-// Control por puntos
-dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => setSlide(i));
-});
+ setSlide(0); // inicial
 });
