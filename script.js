@@ -13,49 +13,45 @@ mapToggle.addEventListener("click", () => {
   }
 });
 
-const track = document.querySelector('.carousel-track');
-const items = Array.from(track.children);
-const dots = document.querySelectorAll('.dot');
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.carousel-track');
+  const items = Array.from(track.children);
+  const dots = document.querySelectorAll('.dot');
 
-let currentIndex = 0;
-let startX = 0;
-let isDragging = false;
+  let currentIndex = 0;
+  let startX = 0;
+  let isDragging = false;
+  let currentTranslate = 0; // posición acumulada
 
-// Función para actualizar posición y puntitos
-function setSlide(index) {
-  currentIndex = index;
-  track.style.transform = `translateX(-${index * 100}%)`;
-  dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-}
+  function setSlide(index) {
+    currentIndex = index;
+    currentTranslate = -index * 100; // porcentaje acumulado
+    track.style.transform = `translateX(${currentTranslate}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+  }
 
-// Detectar cuando empieza el touch
-track.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-  isDragging = true;
+  track.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+  });
+
+  track.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    const deltaX = e.touches[0].clientX - startX;
+    // actualiza posición mientras arrastras
+    track.style.transform = `translateX(${currentTranslate + (deltaX / track.offsetWidth) * 100}%)`;
+  });
+
+  track.addEventListener('touchend', e => {
+    isDragging = false;
+    const endX = e.changedTouches[0].clientX;
+    const deltaX = endX - startX;
+
+    if (deltaX < -50 && currentIndex < items.length - 1) currentIndex++;
+    if (deltaX > 50 && currentIndex > 0) currentIndex--;
+
+    setSlide(currentIndex);
+  });
+
+  setSlide(0); // inicial
 });
-
-// Detectar movimiento del dedo
-track.addEventListener('touchmove', e => {
-  if (!isDragging) return;
-  const deltaX = e.touches[0].clientX - startX;
-  // Esto hace que la imagen siga tu dedo mientras arrastras
-  track.style.transform = `translateX(${-currentIndex * 100 + deltaX / track.offsetWidth * 100}%)`;
-});
-
-// Detectar cuando sueltas el dedo
-track.addEventListener('touchend', e => {
-  isDragging = false;
-  const endX = e.changedTouches[0].clientX;
-  const deltaX = endX - startX;
-
-  // Si deslizaste a la izquierda y hay siguiente imagen
-  if (deltaX < -50 && currentIndex < items.length - 1) currentIndex++;
-
-  // Si deslizaste a la derecha y hay imagen anterior
-  if (deltaX > 50 && currentIndex > 0) currentIndex--;
-
-  setSlide(currentIndex); // actualizar slide y puntitos
-});
-
-// Inicializa carrusel en la primera imagen
-setSlide(0);
