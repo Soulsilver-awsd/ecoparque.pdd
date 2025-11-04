@@ -12,7 +12,6 @@ body {
   margin: auto;
 }
 
-/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -29,34 +28,25 @@ header {
 }
 
 .menu-toggle {
-  margin-right: 8px;
+  width: 35px;
+  height: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: none;
   border: none;
-  color: white;
-  font-size: 2.2rem;
   cursor: pointer;
+  margin-right: 8px;
 }
 
-/* Ventana de menú centrada */
-.menu {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  max-width: 380px;
-  background: #000;
-  color: white;
-  display: none;
-  flex-direction: column;
-  border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
-  z-index: 1001;
-  text-align: center;
+.menu-toggle span {
+  display: block;
+  height: 4px;
+  background-color: white;
+  border-radius: 4px;
+  transition: 0.3s;
 }
 
-/* Fondo oscuro detrás del menú */
 .menu::before {
   content: "";
   position: fixed;
@@ -68,13 +58,6 @@ header {
   z-index: -1;
 }
 
-.menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
 .menu li {
   list-style: none;
   padding: 1rem 0;
@@ -84,18 +67,12 @@ header {
   font-weight: 500;
 }
 
-.close-menu {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2.2rem;
-  cursor: pointer;
-}
-
-/* Sección mapa */
 .map-section {
-  background: #f3f3f3;
+  background: #E6E6E6;
   padding: 1rem;
+  width: 380px;      
+  margin: 1.5rem auto; 
+  border-radius: 10px;
 }
 
 .map-toggle {
@@ -111,7 +88,7 @@ header {
 
 .ubicacion-icon {
   font-size: 28px;
-  color: #E34713;
+  color: #000000;
 }
 
 .ubicacion-texto {
@@ -122,8 +99,8 @@ header {
 
 .arrow {
   margin-left: auto;
-  font-size: 28px;
-  color: #E34713;
+  font-size: 44px;
+  color: #000000;
 }
 
 .map-content {
@@ -139,18 +116,31 @@ header {
   display: block;
 }
 
-.map-img {
-  height: 200px;
-}
-
-.plant-img {
-  height: 250px;
+.mapa {
+  width: 100%;
+  height: 250px; 
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
   margin: 1.5rem auto;
 }
 
-.memory-img {
-  height: 180px;
-  margin-bottom: 1rem;
+.hibiscodebañado {
+  width: 100%;
+  height: 250px; 
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin: 1.5rem auto;
+}
+
+.paisajememorias1 {
+  width: 100%;
+  height: 250px; 
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin: 1.5rem auto;
 }
 
 .content {
@@ -178,34 +168,97 @@ header {
 }
 
 .memories {
-  background: #f3f3f3;
   padding: 1.5rem;
 }
 
 .memories h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-family: Raleway;
+  font-weight: 700;
+  color: #000;
+  margin-left: 22px;
+  font-size: 25px;
+  font-style: bold;
 }
 
-.memory-card {
-  background: white;
+.memory-box {
+  background: rgba(128, 128, 128, 0.5);
+  padding: 1.5rem;
+  min-height: 250px; 
+  width: 100%;
+  margin: 0 auto; 
+}
+
+.memory-box img {
+  width: 100%;
   border-radius: 10px;
-  padding: 1rem;
+  margin-bottom: 1rem;
+  height: 277px;
+}
+
+.memory-box blockquote {
+  font-family: 'DM Sans';
+  font-style: italic;
+  font-weight: 700;
+  color: #222;
+  font-size: 18px;
+}
+
+.memory-box .author {
+  display: block;
+  color: #E34713;
+  margin-top: 0.5rem;
+  font-family: 'DM Sans';
+  font-size: 15px;
+  font-weight: 700;
+  text-align: right;
 }
 
 blockquote {
+  font-family: DM Sans;
   font-style: italic;
   color: #222;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .author {
   display: block;
   color: #E34713;
   margin-top: 0.5rem;
+  font-family: DM Sans;
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 20px;
+  font-style: bold;
 }
 
 footer {
-  text-align: center;
-  font-size: 0.8rem;
+  text-align: left;
+  font-size: 12px;
   padding: 1rem;
   color: #555;
+  margin-left: 6px;
+}
+
+.memories {
+  padding: 0; /* eliminamos el padding lateral que encoge la caja gris */
+}
+
+.memory-box {
+  background: rgba(128, 128, 128, 0.5);
+  width: 100%;
+  padding: 1.5rem;
+  min-height: 250px;
+  border-radius: 0; /* si quieres que quede igual que el header */
+}
+
+.final-text {
+  margin-top: 80px;
+  background: #000; /* igual que el header */
+  color: #fff; /* texto en blanco */
+  width: 100%; /* ocupa todo el ancho del body */
+  padding: 1rem 1.5rem; /* mismo padding que header y contenido */
+  text-align: left; /* igual que el footer anterior */
+  font-size: 12px; /* igual que antes */
 }

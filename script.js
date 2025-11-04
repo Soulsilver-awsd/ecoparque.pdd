@@ -1,16 +1,3 @@
-// Menú desplegable
-const menuToggle = document.querySelector(".menu-toggle");
-const closeMenu = document.querySelector(".close-menu");
-const menu = document.querySelector(".menu");
-
-menuToggle.addEventListener("click", () => {
-  menu.style.display = "flex";
-});
-
-closeMenu.addEventListener("click", () => {
-  menu.style.display = "none";
-});
-
 // Sección mapa desplegable
 const mapToggle = document.querySelector(".map-toggle");
 const mapContent = document.querySelector(".map-content");
